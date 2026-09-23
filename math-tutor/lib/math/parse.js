@@ -85,6 +85,15 @@ export function intervalsSameEnds(a, b) {
 
 /** "(2, 5), (-1, 3)" → [[2,5],[-1,3]]. [] for "none", null if unreadable. */
 export function parsePoints(raw) {
+  // Also accept "x = 2, y = -1" (either order) for a single point.
+  const flat = String(raw ?? '').toLowerCase().replace(/[−–—]/g, '-').replace(/\s+/g, '');
+  const xy = flat.match(/^x=([^,;]+?)(?:,and|,|;|and)y=(.+)$/);
+  const yx = flat.match(/^y=([^,;]+?)(?:,and|,|;|and)x=(.+)$/);
+  if (xy || yx) {
+    const x = parseNumber(xy ? xy[1] : yx[2]);
+    const y = parseNumber(xy ? xy[2] : yx[1]);
+    if (x !== null && y !== null) return [[x, y]];
+  }
   const s = normalize(raw);
   if (!s) return null;
   if (NONE_WORDS.has(s)) return [];
