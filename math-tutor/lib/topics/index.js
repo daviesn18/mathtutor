@@ -6,8 +6,9 @@ import functionsRelations from './functions-relations.js';
 import graphFeatures from './graph-features.js';
 import functionNotation from './function-notation.js';
 import domainRange from './domain-range.js';
+import systems from './systems.js';
 
-export const TOPICS = [functionsRelations, functionNotation, domainRange, graphFeatures];
+export const TOPICS = [functionsRelations, functionNotation, domainRange, graphFeatures, systems];
 
 export const getTopic = (id) => TOPICS.find((t) => t.id === id);
 
